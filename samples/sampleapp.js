@@ -1,7 +1,7 @@
 //  Build our app module, with a dependency on the angular modal service.
 var app = angular.module('sampleapp', ['angularModalService']);
 
-app.controller('SampleController', ['$scope', 'ModalService', function($scope, ModalService) {
+app.controller('SampleController', ['$scope', '$q', 'ModalService', function($scope, $q, ModalService) {
   
   $scope.yesNoResult = null;
   $scope.complexResult = null;
@@ -46,6 +46,27 @@ app.controller('SampleController', ['$scope', 'ModalService', function($scope, M
     }).then(function(modal) {
       modal.close.then(function(result) {
         $scope.customResult = "All good!";
+      });
+    });
+
+  };
+
+  $scope.showClose = function() {
+
+    ModalService.showModal({
+      templateUrl: "close/close.html",
+      controller: "CloseController"
+    }).then(function(modal) {
+      modal.element.remodal({
+        closeOnConfirm: false,
+        closeOnEscape: false,
+        CloseOnAnyClick: false
+      }).open();
+      modal.element.one('closed', function () {
+        modal.closeFn();
+      });
+      modal.close.then(function(result) {
+        $scope.closeResult = "All good!";
       });
     });
 

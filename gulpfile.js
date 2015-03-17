@@ -28,6 +28,8 @@ gulp.task('vendor', function() {
   gulp.src('bower_components/jquery/dist/*.*')
     .pipe(gulp.dest('samples/vendor/jquery'));
 
+  gulp.src('bower_components/remodal/dist/*.*')
+    .pipe(gulp.dest('samples/vendor/remodal'));
 });
 
 //  Builds the js code.
