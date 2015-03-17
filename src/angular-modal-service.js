@@ -137,13 +137,18 @@
               body.append(modalElement);
             }
 
+            var closeFnDeferred = $q.defer();
+            closeFnDeferred.promise.then(function (result, delay) {
+              inputs.close(result, delay);
+            });
+
             //  We now have a modal object...
             var modal = {
               controller: modalController,
               scope: modalScope,
               element: modalElement,
               close: closeDeferred.promise,
-              closeFn: inputs.close
+              closeDeferred: closeFnDeferred
             };
 
             //  ...which is passed to the caller via the promise.

@@ -63,7 +63,7 @@ app.controller('SampleController', ['$scope', '$q', 'ModalService', function($sc
         CloseOnAnyClick: false
       }).open();
       modal.element.one('closed', function () {
-        modal.closeFn();
+        modal.closeDeferred.resolve();
       });
       modal.close.then(function(result) {
         $scope.closeResult = "All good!";
