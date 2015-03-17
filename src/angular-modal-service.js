@@ -88,13 +88,17 @@
               close: function(result, delay) {
                 if(delay === undefined || delay === null) delay = 0;
                 window.setTimeout(function() {
-                  //  Resolve the 'close' promise.
-                  closeDeferred.resolve(result);
+                  if (options.close) {
+                    options.close(closeDeferred, modalElement);
+                    modalScope.$destroy();
+                  } else {
+                    //  Resolve the 'close' promise.
+                    closeDeferred.resolve(result);
 
-                  //  We can now clean up the scope and remove the element from the DOM.
-                  modalScope.$destroy();
-                  modalElement.remove();
-                  
+                    //  We can now clean up the scope and remove the element from the DOM.
+                    modalScope.$destroy();
+                    modalElement.remove();
+                  }
                   //  Unless we null out all of these objects we seem to suffer
                   //  from memory leaks, if anyone can explain why then I'd 
                   //  be very interested to know.
